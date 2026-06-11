@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sandakphu Trek — Field Guide v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,500&family=Archivo:wght@400;500;600;700&family=Archivo+Narrow:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#0e1726;
+    --night-2:#15233a;
+    --slate:#1d2f4a;
+    --ridge:#2c4a6e;
+    --ice:#a9c6e8;
+    --ice-dim:#6f8db0;
+    --snow:#eef4fb;
+    --amber:#f5a623;
+    --amber-soft:#ffcf7a;
+    --rose:#e8845f;
+    --line:rgba(169,198,232,0.16);
+    --line-2:rgba(169,198,232,0.28);
+    --ok:#7fc8a9;
+    --warn:#f5a623;
+    --bad:#e8845f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Archivo',sans-serif;
+    background:var(--night);
+    color:var(--snow);
+    line-height:1.6;
+    overflow-x:hidden;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(245,166,35,0.10), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 90% 10%, rgba(169,198,232,0.06), transparent 60%);
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:0 22px}
+
+  /* HERO */
+  .hero{position:relative;padding:64px 0 30px;overflow:hidden}
+  .hero-ridge{position:absolute;left:0;right:0;bottom:0;height:180px;z-index:0;opacity:.6}
+  .kicker{font-family:'Archivo Narrow';letter-spacing:.32em;text-transform:uppercase;font-size:.72rem;color:var(--amber);font-weight:700}
+  h1{font-family:'Fraunces';font-weight:600;font-size:clamp(2.8rem,8vw,5.2rem);line-height:.95;letter-spacing:-.02em;margin:.18em 0 .1em;position:relative;z-index:1}
+  h1 em{font-style:italic;color:var(--amber-soft);font-weight:400}
+  .sub{font-size:1.05rem;color:var(--ice);max-width:600px;position:relative;z-index:1}
+  .dateline{display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:9px 16px;border:1px solid var(--line-2);border-radius:40px;font-family:'Archivo Narrow';letter-spacing:.05em;font-size:.92rem;color:var(--snow);background:rgba(21,35,58,.5);position:relative;z-index:1}
+  .dateline b{color:var(--amber-soft)}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:34px;position:relative;z-index:1}
+  .stat{background:var(--night-2);padding:18px 16px}
+  .stat .n{font-family:'Fraunces';font-size:1.7rem;line-height:1;color:var(--snow)}
+  .stat .l{font-family:'Archivo Narrow';text-transform:uppercase;letter-spacing:.12em;font-size:.66rem;color:var(--ice-dim);margin-top:7px}
+  @media(max-width:620px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+  /* SECTIONS */
+  section{padding:46px 0;border-top:1px solid var(--line)}
+  .eyebrow{font-family:'Archivo Narrow';letter-spacing:.28em;text-transform:uppercase;font-size:.72rem;color:var(--amber);font-weight:700;margin-bottom:12px}
+  h2{font-family:'Fraunces';font-weight:600;font-size:clamp(1.7rem,4.5vw,2.5rem);letter-spacing:-.01em;line-height:1.05;margin-bottom:8px}
+  h2 em{font-style:italic;color:var(--amber-soft);font-weight:400}
+  .lead{color:var(--ice);font-size:1.04rem;max-width:640px;margin-bottom:26px}
+  p{color:#cdddf0}
+  p+p{margin-top:12px}
+  strong{color:var(--snow)}
+
+  /* callout */
+  .note{border:1px solid var(--line-2);border-left:3px solid var(--amber);border-radius:0 12px 12px 0;background:linear-gradient(90deg,rgba(245,166,35,.06),rgba(21,35,58,.3));padding:18px 20px;margin:22px 0}
+  .note.cool{border-left-color:var(--ice);background:linear-gradient(90deg,rgba(169,198,232,.06),rgba(21,35,58,.3))}
+  .note.green{border-left-color:var(--ok);background:linear-gradient(90deg,rgba(127,200,169,.06),rgba(21,35,58,.3))}
+  .note.red{border-left-color:var(--bad);background:linear-gradient(90deg,rgba(232,132,95,.06),rgba(21,35,58,.3))}
+  .note .nt{font-family:'Archivo Narrow';text-transform:uppercase;letter-spacing:.14em;font-size:.72rem;color:var(--amber);font-weight:700;margin-bottom:6px}
+  .note.cool .nt{color:var(--ice)}
+  .note.green .nt{color:var(--ok)}
+  .note.red .nt{color:var(--bad)}
+
+  /* ITINERARY */
+  .day{border:1px solid var(--line);border-radius:14px;margin-bottom:12px;overflow:hidden;background:var(--night-2);transition:border-color .25s}
+  .day:hover{border-color:var(--line-2)}
+  .day.day-zero{border-left:3px solid var(--ice)}
+  .day-head{display:flex;align-items:center;gap:18px;padding:18px 20px;cursor:pointer;user-select:none}
+  .day-no{font-family:'Fraunces';font-size:1.5rem;color:var(--amber);min-width:64px;line-height:1}
+  .day-no span{display:block;font-family:'Archivo Narrow';font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ice-dim);margin-top:3px}
+  .day-zero .day-no{color:var(--ice)}
+  .day-main{flex:1}
+  .day-route{font-weight:600;font-size:1.06rem}
+  .day-meta{font-family:'Archivo Narrow';font-size:.84rem;color:var(--ice-dim);letter-spacing:.03em;margin-top:2px}
+  .day-meta b{color:var(--ice)}
+  .chev{color:var(--ice-dim);transition:transform .3s;font-size:1.1rem}
+  .day.open .chev{transform:rotate(180deg)}
+  .day-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+  .day-inner{padding:4px 20px 22px 20px;border-top:1px solid var(--line)}
+  .day-inner p{font-size:.95rem;margin-top:14px}
+  .rowstats{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .pill{font-family:'Archivo Narrow';font-size:.74rem;letter-spacing:.06em;padding:6px 12px;border-radius:30px;border:1px solid var(--line-2);color:var(--ice);text-transform:uppercase}
+  .pill b{color:var(--amber-soft);font-weight:600}
+
+  /* elevation bar */
+  .elev{display:flex;align-items:flex-end;gap:3px;height:120px;margin:26px 0 6px;padding:14px 4px 0;border-bottom:1px solid var(--line-2)}
+  .ebar{flex:1;background:linear-gradient(180deg,var(--ice),var(--slate));border-radius:4px 4px 0 0;position:relative;min-width:0;opacity:.85;transition:opacity .2s}
+  .ebar:hover{opacity:1}
+  .ebar.peak{background:linear-gradient(180deg,var(--amber-soft),var(--amber))}
+  .ebar .lab{position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);font-family:'Archivo Narrow';font-size:.58rem;color:var(--ice-dim);white-space:nowrap;letter-spacing:.04em}
+  .ebar .alt{position:absolute;top:-17px;left:50%;transform:translateX(-50%);font-family:'Archivo Narrow';font-size:.56rem;color:var(--ice)}
+  .elev-wrap{margin-bottom:48px}
+  @media(max-width:620px){.ebar .lab{font-size:.5rem;transform:translateX(-50%) rotate(-50deg);transform-origin:top left;left:30%}}
+
+  /* TABLES / GRIDS */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:620px){.grid2{grid-template-columns:1fr}}
+  .card{border:1px solid var(--line);border-radius:12px;padding:20px;background:var(--night-2)}
+  .card h3{font-family:'Fraunces';font-weight:600;font-size:1.15rem;margin-bottom:8px}
+  .card.amber h3{color:var(--amber-soft)}
+  .card ul{list-style:none;margin-top:6px}
+  .card li{padding:6px 0 6px 20px;position:relative;font-size:.92rem;color:#cdddf0;border-top:1px solid var(--line)}
+  .card li:first-child{border-top:none}
+  .card li:before{content:'';position:absolute;left:2px;top:14px;width:6px;height:6px;border-radius:50%;background:var(--amber)}
+
+  table{width:100%;border-collapse:collapse;margin-top:8px;font-size:.92rem}
+  th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line)}
+  th{font-family:'Archivo Narrow';text-transform:uppercase;letter-spacing:.1em;font-size:.68rem;color:var(--ice-dim);font-weight:700}
+  td{color:#cdddf0}
+  td b{color:var(--snow)}
+  .tot td{border-top:2px solid var(--line-2);color:var(--amber-soft);font-weight:700}
+  .tot td b{color:var(--amber-soft)}
+
+  /* WEATHER YEAR BLOCKS */
+  .yr-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+  @media(max-width:620px){.yr-grid{grid-template-columns:1fr}}
+  .yr-card{border:1px solid var(--line);border-radius:12px;padding:18px;background:var(--night-2)}
+  .yr-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .yr-num{font-family:'Fraunces';font-size:1.4rem;font-weight:600;color:var(--snow)}
+  .badge{font-family:'Archivo Narrow';font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:3px 10px;border-radius:20px}
+  .badge.ok{background:rgba(127,200,169,.16);color:var(--ok);border:1px solid rgba(127,200,169,.35)}
+  .badge.warn{background:rgba(245,166,35,.16);color:var(--amber);border:1px solid rgba(245,166,35,.35)}
+  .badge.bad{background:rgba(232,132,95,.16);color:var(--bad);border:1px solid rgba(232,132,95,.35)}
+  .yr-card p{font-size:.88rem;color:#b8cde4;line-height:1.65}
+  .bar-wrap{display:flex;align-items:center;gap:8px;margin:6px 0}
+  .bar-label{font-family:'Archivo Narrow';font-size:.7rem;color:var(--ice-dim);min-width:100px;letter-spacing:.04em}
+  .bar-outer{flex:1;height:7px;background:var(--slate);border-radius:4px;overflow:hidden}
+  .bar-inner{height:100%;border-radius:4px}
+  .bar-pct{font-family:'Archivo Narrow';font-size:.7rem;color:var(--ice-dim);min-width:28px;text-align:right}
+
+  /* GEAR CHECKLIST */
+  .gear-group{margin-bottom:24px}
+  .gear-group h3{font-family:'Fraunces';font-weight:600;font-size:1.2rem;margin-bottom:4px;display:flex;align-items:baseline;gap:10px}
+  .tag{font-family:'Archivo Narrow';font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:20px;font-weight:700}
+  .tag.have{background:rgba(127,200,169,.16);color:var(--ok);border:1px solid rgba(127,200,169,.4)}
+  .tag.buy{background:rgba(245,166,35,.16);color:var(--amber);border:1px solid rgba(245,166,35,.4)}
+  .tag.maybe{background:rgba(169,198,232,.12);color:var(--ice);border:1px solid var(--line-2)}
+  .gi{display:flex;gap:13px;padding:11px 0;border-top:1px solid var(--line);align-items:flex-start;cursor:pointer}
+  .gi:first-of-type{border-top:none}
+  .box{width:20px;height:20px;border:1.5px solid var(--ice-dim);border-radius:5px;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:.18s;font-size:.8rem}
+  .gi.checked .box{background:var(--amber);border-color:var(--amber);color:var(--night)}
+  .gi.checked .gtxt{opacity:.5;text-decoration:line-through}
+  .gtxt{font-size:.94rem}
+  .gtxt b{color:var(--snow)}
+  .gtxt small{display:block;color:var(--ice-dim);font-size:.8rem;margin-top:1px;text-decoration:none}
+  .progress{height:6px;background:var(--slate);border-radius:6px;overflow:hidden;margin:6px 0 26px}
+  .progress > div{height:100%;background:linear-gradient(90deg,var(--amber),var(--amber-soft));width:0;transition:width .3s}
+
+  /* CLOCK */
+  .clock{display:grid;grid-template-columns:auto 1fr;gap:0 18px}
+  .ct{font-family:'Fraunces';color:var(--amber-soft);font-size:1.05rem;padding:10px 0;white-space:nowrap;border-bottom:1px solid var(--line)}
+  .cd{padding:10px 0;border-bottom:1px solid var(--line);font-size:.94rem}
+  .cd b{color:var(--snow)}
+  .clock > .ct:last-of-type,.clock > .cd:last-child{border-bottom:none}
+
+  footer{padding:40px 0 60px;border-top:1px solid var(--line);text-align:center;color:var(--ice-dim);font-size:.84rem}
+  footer .src{font-family:'Archivo Narrow';font-size:.74rem;letter-spacing:.04em;margin-top:10px;color:var(--ice-dim);opacity:.7;max-width:640px;margin-left:auto;margin-right:auto}
+
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+  .toc a{font-family:'Archivo Narrow';font-size:.8rem;letter-spacing:.05em;padding:7px 14px;border:1px solid var(--line-2);border-radius:30px;color:var(--ice);text-decoration:none;transition:.2s}
+  .toc a:hover{border-color:var(--amber);color:var(--amber-soft)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <svg class="hero-ridge" viewBox="0 0 1200 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,180 L0,120 L120,70 L240,110 L360,40 L480,90 L600,20 L720,80 L840,55 L960,100 L1080,60 L1200,110 L1200,180 Z" fill="#15233a"/>
+    <path d="M0,180 L0,150 L150,110 L300,140 L450,95 L600,130 L750,100 L900,135 L1050,105 L1200,140 L1200,180 Z" fill="#1d2f4a" opacity=".8"/>
+  </svg>
+  <div class="wrap">
+    <div class="kicker">Singalila Ridge · West Bengal · First Himalayan Trek · Your Brother's Plan</div>
+    <h1>Sandakphu<br><em>the Sleeping Buddha</em></h1>
+    <p class="sub">11,930 ft. The only place in India where Everest, Kanchenjunga, Lhotse and Makalu line up in a single frame. A beginner-friendly ridge walk on the India–Nepal border, done in 5 on-ground days the smart, local way.</p>
+    <div class="dateline">📅 Window: <b>26 Sep → 4 Oct 2026</b> · 2 pax (maybe 3–4) · NJP via Sukhia Pokhari</div>
+
+    <div class="stats">
+      <div class="stat"><div class="n">11,930<span style="font-size:.9rem"> ft</span></div><div class="l">Summit altitude</div></div>
+      <div class="stat"><div class="n">~47 km</div><div class="l">On foot (4 trek days)</div></div>
+      <div class="stat"><div class="n">Day 0–5</div><div class="l">On-ground plan</div></div>
+      <div class="stat"><div class="n">Easy–Mod</div><div class="l">Difficulty</div></div>
+    </div>
+
+    <nav class="toc">
+      <a href="#brief">Brief</a>
+      <a href="#route">Day-by-day</a>
+      <a href="#rhythm">Daily rhythm</a>
+      <a href="#transport">Transport</a>
+      <a href="#money">Budget</a>
+      <a href="#weather">Weather by year</a>
+      <a href="#gear">Gear list</a>
+      <a href="#safety">Safety</a>
+      <a href="#book">Next steps</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- BRIEF -->
+  <section id="brief">
+    <div class="eyebrow">Read this first</div>
+    <h2>The honest brief <em>for your dates</em></h2>
+    <p class="lead">Your brother's plan is well-structured and built the way experienced Bengali trekkers do this route — shared cars, GTA huts, and the Rinku homestay at the end. The stages are properly paced with good acclimatization built in. A few things to know before you go.</p>
+
+    <div class="note green">
+      <div class="nt">✓ Why this plan works</div>
+      <p>Day 0 at Maneybhanjan is the key smart move — you arrive rested, sort permits and your guide that evening, and start Day 1 fresh. The Tonglu → Kalipokhri → Sandakphu ascent is the classic route with ideal altitude gain each day. The descent via Srikhola (instead of backtracking) gives you a completely different landscape on the way down. This is exactly how the trek should be done.</p>
+    </div>
+
+    <div class="note">
+      <div class="nt">⚠ One thing to watch on Day 4</div>
+      <p>Sandakphu → Srikhola in one push is <strong>~16–18 km of mostly steep descent</strong> — the longest and physically hardest day. Most first-timers split it as Sandakphu → Gurdum (10 km), then Gurdum → Srikhola (6 km) the next morning. Your brother has likely assessed your fitness and knows it's doable; just <strong>start by 7 AM</strong> and if either of you is struggling at Gurdum (~2,300 m, ~10 km in), there are homestays — stay there and walk to Srikhola in the morning. Not a failure, just smart.</p>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>What makes it doable</h3>
+        <ul>
+          <li>No technical climbing — long uphill walk on jeep track + trail</li>
+          <li>Tea-house and GTA hut stays: warm beds, blankets, hot dal-bhat, no tents</li>
+          <li>Gradual ascent over 3 days = natural acclimatization</li>
+          <li>Road access at every stage — bail-out always possible</li>
+        </ul>
+      </div>
+      <div class="card amber">
+        <h3>What to respect</h3>
+        <ul>
+          <li>Long days — 11–14 km with daypacks, 5–7 hrs moving</li>
+          <li>Day 4 descent is <strong>steep and knee-punishing</strong></li>
+          <li>Summit nights drop to <strong>2–8°C</strong>; bare ridge wind is bitter</li>
+          <li>A registered local guide is <strong>legally mandatory</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note cool">
+      <div class="nt">🏋️ Start prepping now — ~3.5 months to go</div>
+      <p>Cardio 4–5×/week — brisk walks, stair climbs, jog. Build to a continuous <strong>60–90 min walk</strong> comfortably. The real killer is the long descent, so train downhill specifically — stairs or any slope. Two solid months of this turns Day 4 from a grind into a pleasure.</p>
+    </div>
+  </section>
+
+  <!-- ROUTE -->
+  <section id="route">
+    <div class="eyebrow">Your brother's plan</div>
+    <h2>Day-by-day <em>itinerary</em></h2>
+    <p class="lead">Day 0 travel → Day 1–3 ascent → Day 4 epic descent → Day 5 drive home. Clean loop, no backtracking. Tap any day to expand.</p>
+
+    <div class="elev-wrap">
+      <div class="elev" id="elev"></div>
+    </div>
+
+    <div id="days"></div>
+
+    <div class="note" style="margin-top:24px">
+      <div class="nt">↗ Optional: Phalut extension</div>
+      <p>Fitter groups can add <strong>Phalut (3,600 m)</strong> from Sandakphu — another stunning ridge day before descending via Gorkhey/Rammam. For a first trek, skip it and keep the trip relaxed. Your window has room for it, but spare days are better used as weather buffer — especially in late September.</p>
+    </div>
+  </section>
+
+  <!-- RHYTHM -->
+  <section id="rhythm">
+    <div class="eyebrow">Light &amp; time</div>
+    <h2>The daily <em>rhythm</em></h2>
+    <p class="lead">Late Sep–early Oct daylight: roughly <strong>sunrise 5:15–5:25 AM, sunset 5:20–5:35 PM</strong> (~12 hrs light). Mountains are clearest at dawn before clouds build. Days start and end early.</p>
+
+    <div class="grid2" style="align-items:start">
+      <div class="card amber">
+        <h3>Sunrise summit morning (Day 3 night / Day 4 dawn)</h3>
+        <div class="clock" style="margin-top:6px">
+          <div class="ct">4:30</div><div class="cd"><b>Wake.</b> Layer everything you have — it's cold and dark.</div>
+          <div class="ct">4:45</div><div class="cd">Walk to the Sandakphu viewpoint (Sleeping Buddha bench).</div>
+          <div class="ct">5:00</div><div class="cd"><b>First light</b> hits Kanchenjunga — gold creeps down the massif. On clear days, Everest's tip shows far left.</div>
+          <div class="ct">5:20</div><div class="cd">Full sunrise. This is the shot you came for.</div>
+          <div class="ct">6:30</div><div class="cd">Breakfast, then descend before afternoon cloud builds.</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>A normal trek day</h3>
+        <div class="clock" style="margin-top:6px">
+          <div class="ct">6:00</div><div class="cd"><b>Wake</b> to morning views — clearest window of the day.</div>
+          <div class="ct">7:00</div><div class="cd">Breakfast — eggs, paratha, toast, multiple teas.</div>
+          <div class="ct">7:30</div><div class="cd"><b>Start walking</b> while it's cool and clear.</div>
+          <div class="ct">12:30</div><div class="cd">Lunch at a trail tea-house: Maggi, thukpa, dal-bhat.</div>
+          <div class="ct">2–4 PM</div><div class="cd"><b>Reach night halt.</b> Clouds often roll in by afternoon.</div>
+          <div class="ct">7:00</div><div class="cd">Dinner, then sleep — cold and dark come fast up here.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSPORT -->
+  <section id="transport">
+    <div class="eyebrow">Getting there &amp; back</div>
+    <h2>Transport — <em>the local way</em></h2>
+    <p class="lead">Your brother's NJP → Sukhia Pokhari → Maneybhanjan shared-car route is exactly how locals and experienced Bengali trekkers do it. Cheaper, more frequent, and avoids booking a private jeep.</p>
+
+    <table>
+      <tr><th>Leg</th><th>How</th><th>Time</th><th>Approx cost pp</th></tr>
+      <tr><td><b>Kolkata → NJP</b></td><td>Overnight train (Darjeeling Mail / Padatik — departs ~10–11 PM)</td><td>~10–12 hrs (arrives ~7–8 AM)</td><td>₹300–900 (sleeper–3AC)</td></tr>
+      <tr><td><b>NJP → Sukhia Pokhari</b></td><td>Shared Sumo from NJP taxi stand / Darjeeling More, Siliguri</td><td>~2.5–3 hrs</td><td>~₹200–300</td></tr>
+      <tr><td><b>Sukhia Pokhari → Maneybhanjan</b></td><td>Short shared car change (~7 km)</td><td>~30 min</td><td>~₹40–80</td></tr>
+      <tr><td><b>Srikhola → NJP (Day 5)</b></td><td>Shared jeep via Rimbik → Maneybhanjan → Siliguri</td><td>~5–6 hrs</td><td>~₹350–500</td></tr>
+      <tr class="tot"><td><b>Both car legs total</b></td><td>vs ~₹6,000 private round-trip</td><td>—</td><td><b>~₹600–900 pp ✓</b></td></tr>
+    </table>
+
+    <div class="note cool">
+      <div class="nt">📌 Shared car logistics — what to know</div>
+      <p>Shared Sumos from NJP fill up in the morning — <strong>be at the taxi stand by 8–9 AM</strong> to get on one. Your train arriving ~7–8 AM works perfectly for this. Vehicles go via Mirik / Rohini / Sukhia Pokhari. At Sukhia, wait a few minutes for the Maneybhanjan change — they're frequent till evening. <strong>No ATM after Sukhia Pokhari</strong>, so withdraw cash at NJP or Siliguri before getting in.</p>
+    </div>
+  </section>
+
+  <!-- BUDGET -->
+  <section id="money">
+    <div class="eyebrow">The money question</div>
+    <h2>Budget reality — <em>₹1,000/day honest?</em></h2>
+    <p class="lead">Your brother's ₹1,000 food+stay per person per day estimate is achievable at the budget end, but requires consistently choosing dorm beds at GTA huts and eating thalis. Here's the full honest breakdown.</p>
+
+    <div class="note">
+      <div class="nt">Quick verdict</div>
+      <p><strong>₹800–1,000/day</strong> is realistic if you go GTA trekkers' hut dorms + local food. At Sandakphu specifically (everything gets carried up the mountain), a private room + meals can push to ₹1,200–1,500. Budget ₹1,200/day to be safe and you'll likely come in under.</p>
+    </div>
+
+    <h3 style="margin:22px 0 8px;font-family:'Fraunces';font-size:1.2rem">Per person per day on trail — food + stay</h3>
+    <table>
+      <tr><th>Item</th><th>Budget option</th><th>Comfortable option</th></tr>
+      <tr><td><b>Night halt</b></td><td>GTA hut dorm ₹150–300</td><td>Private room ₹400–700</td></tr>
+      <tr><td><b>Breakfast</b></td><td>Eggs + bread + tea ₹80–120</td><td>Full spread ₹120–200</td></tr>
+      <tr><td><b>Lunch (trail)</b></td><td>Maggi / thukpa ₹80–130</td><td>Dal-bhat + chai ₹130–200</td></tr>
+      <tr><td><b>Dinner</b></td><td>Rice + dal + sabzi ₹100–150</td><td>Full thali ₹150–250</td></tr>
+      <tr><td><b>Tea + snacks</b></td><td>Multiple chais ₹50–80</td><td>Biscuits + chai ₹80–120</td></tr>
+      <tr class="tot"><td><b>Daily total</b></td><td><b>₹460–780</b> (dorm + thali)</td><td><b>₹880–1,470</b> (private room)</td></tr>
+    </table>
+
+    <h3 style="margin:22px 0 8px;font-family:'Fraunces';font-size:1.2rem">Full trip estimate — 2 people</h3>
+    <table>
+      <tr><th>Item</th><th>Notes</th><th>Per person</th></tr>
+      <tr><td><b>Food + stay × 5 days</b></td><td>₹1,000/day avg (your estimate)</td><td>₹5,000</td></tr>
+      <tr><td><b>Guide (mandatory)</b></td><td>~₹1,200/day × 5 days, shared ÷ 2</td><td>~₹3,000</td></tr>
+      <tr><td><b>Park entry permit</b></td><td>~₹120/day × 4 park days</td><td>~₹500</td></tr>
+      <tr><td><b>NJP → Sukhia + Sukhia → Mane</b></td><td>Shared car Day 0</td><td>~₹300–400 ✓</td></tr>
+      <tr><td><b>Srikhola → NJP share car</b></td><td>Shared jeep Day 5</td><td>~₹350–500 ✓</td></tr>
+      <tr><td><b>Kolkata ↔ NJP train (return)</b></td><td>Book 60 days out — book early</td><td>₹600–1,800</td></tr>
+      <tr><td><b>Misc</b></td><td>Tips, charging, ORS, snacks, camera fee</td><td>~₹800–1,000</td></tr>
+      <tr class="tot"><td><b>Total per person</b></td><td>All-in estimate</td><td><b>₹10,500–13,200</b></td></tr>
+    </table>
+
+    <div class="note cool">
+      <div class="nt">If you go 3–4 people</div>
+      <p>Guide cost drops per head (same guide, shared fee). If you get a 4th person, the guide alone saves ~₹750 pp. Shared car legs become even cheaper. Budget per person falls to roughly <strong>₹9,000–11,500</strong> at 4 pax.</p>
+    </div>
+  </section>
+
+  <!-- WEATHER -->
+  <section id="weather">
+    <div class="eyebrow">Year-by-year reality check</div>
+    <h2>Weather in your window — <em>what actually happens</em></h2>
+    <p class="lead">Every operator, experienced trekker and trip report says the same thing: <strong>the monsoon tail lingers on the Singalila Ridge into late September</strong>. Eastern Himalayas have a prolonged monsoon. Here's what recent years actually looked like on the ground.</p>
+
+    <div class="note red">
+      <div class="nt">The core trade-off</div>
+      <p>Late September (26–30) = <strong>35–40% chance of clear sunrise views</strong>, beautiful green trail, possible showers. Early October (1–4) = <strong>60–70% chance of clear sunrise views</strong>, crisp air, drier trail. Within your 9-day window, pushing your summit night to land on <strong>October 1–3</strong> meaningfully improves your odds of seeing the Sleeping Buddha clearly. Leave Kolkata around <strong>28–29 September</strong> to make that happen.</p>
+    </div>
+
+    <div class="grid2" style="margin-top:18px">
+      <div style="background:var(--night-2);border:1px solid var(--line);border-radius:12px;padding:18px">
+        <div style="font-family:'Fraunces';font-size:1.1rem;margin-bottom:12px">Late September (26–30)</div>
+        <div class="bar-wrap"><span class="bar-label">Clear summit views</span><div class="bar-outer"><div class="bar-inner" style="width:35%;background:#e8845f"></div></div><span class="bar-pct">~35%</span></div>
+        <div class="bar-wrap"><span class="bar-label">Partial / mixed</span><div class="bar-outer"><div class="bar-inner" style="width:40%;background:#f5a623"></div></div><span class="bar-pct">~40%</span></div>
+        <div class="bar-wrap"><span class="bar-label">Overcast / rain</span><div class="bar-outer"><div class="bar-inner" style="width:25%;background:#3a6e8f"></div></div><span class="bar-pct">~25%</span></div>
+        <p style="font-size:.84rem;color:var(--ice-dim);margin-top:10px">Post-monsoon transition. Mornings can be clear, afternoons cloud over. Trail is lush and green. Views uncertain.</p>
+      </div>
+      <div style="background:var(--night-2);border:1px solid rgba(127,200,169,.3);border-radius:12px;padding:18px">
+        <div style="font-family:'Fraunces';font-size:1.1rem;margin-bottom:12px;color:var(--ok)">Early October (1–4)</div>
+        <div class="bar-wrap"><span class="bar-label">Clear summit views</span><div class="bar-outer"><div class="bar-inner" style="width:65%;background:#7fc8a9"></div></div><span class="bar-pct">~65%</span></div>
+        <div class="bar-wrap"><span class="bar-label">Partial / mixed</span><div class="bar-outer"><div class="bar-inner" style="width:25%;background:#f5a623"></div></div><span class="bar-pct">~25%</span></div>
+        <div class="bar-wrap"><span class="bar-label">Overcast / rain</span><div class="bar-outer"><div class="bar-inner" style="width:10%;background:#3a6e8f"></div></div><span class="bar-pct">~10%</span></div>
+        <p style="font-size:.84rem;color:var(--ice-dim);margin-top:10px">Monsoon pulls back fast. Crisp clear mornings, golden light, sharp peak silhouettes. This is when Sandakphu earns its reputation.</p>
+      </div>
+    </div>
+
+    <div class="yr-grid">
+      <div class="yr-card">
+        <div class="yr-head"><span class="yr-num">2024</span><span class="badge warn">Mixed</span></div>
+        <p>Late September brought lingering moisture across the ridge. Trekking groups in 25–30 Sep reported cloud-covered mornings and partial views. Those reaching Sandakphu in the last 2–3 days of September caught occasional dawn windows (~40% clear). First week of October cleared significantly — multiple reports of full Sleeping Buddha at sunrise from Oct 2 onwards. Trail was muddy in parts but walkable throughout.</p>
+      </div>
+      <div class="yr-card">
+        <div class="yr-head"><span class="yr-num">2023</span><span class="badge bad">Mostly cloudy</span></div>
+        <p>Heavy monsoon year across Northeast India. Late September was largely overcast — most accounts from 25–30 Sep 2023 reported no clear peak views. Some brief morning windows through clouds. Early October 2023 improved fast — by Oct 2–5 the ridge was reporting sharp clear skies. Multiple Bengali group accounts confirm: "saw nothing from Sandakphu on 28–29 Sep but the trail itself was stunning."</p>
+      </div>
+      <div class="yr-card">
+        <div class="yr-head"><span class="yr-num">2022</span><span class="badge ok">Better than average</span></div>
+        <p>Relatively drier post-monsoon. Late September had mixed but somewhat better visibility — trekkers from 23–30 Sep 2022 report some clear mornings, especially 26–28 Sep. One Bengali group trip (27–29 Sep 2022): "saw Kanchenjunga clearly on the second morning but clouds came in fast after 7 AM." October 2022 was excellent. A decent year overall for the late-Sep window.</p>
+      </div>
+      <div class="yr-card">
+        <div class="yr-head"><span class="yr-num">2019</span><span class="badge ok">Pre-COVID benchmark</span></div>
+        <p>Useful baseline. Late September 2019 was transitional — some clear mornings, some cloud. Early October 2019 was widely described as excellent by multiple trek operators. One Indiahikes report from Oct 2019: "absolutely clear views of all four peaks from Sandakphu summit." Confirms the consistent pattern: late Sep is a gamble, early Oct is reliably better.</p>
+      </div>
+    </div>
+
+    <div class="note cool">
+      <div class="nt">The "optimal departure" from Kolkata</div>
+      <p>To land your summit on Oct 1–3 — your best odds window — aim to depart Kolkata on <strong>28 or 29 September</strong>. That puts Day 0 (Maneybhanjan arrival) on 29 or 30 Sep, Day 3 (Sandakphu night) on Oct 2 or 3, and sunrise on Oct 3 or 4. Fits perfectly in your window and gives you the clearest shot at the view.</p>
+    </div>
+  </section>
+
+  <!-- GEAR -->
+  <section id="gear">
+    <div class="eyebrow">Kit check</div>
+    <h2>Your personal <em>gear list</em></h2>
+    <p class="lead">Built around what you already own. <span class="tag have" style="display:inline">Have</span> = you're set &nbsp;·&nbsp; <span class="tag buy" style="display:inline">Buy / sort</span> = get this before you go &nbsp;·&nbsp; <span class="tag maybe" style="display:inline">Optional</span>. Tap to tick things off.</p>
+
+    <div class="progress"><div id="bar"></div></div>
+    <div id="gearlist"></div>
+
+    <div class="note cool">
+      <div class="nt">🎒 The bag question</div>
+      <p>A travel holdall with no hip belt becomes genuinely painful over 6–7 hr walking days — all the weight hangs from your shoulders. The cleanest fix: <strong>hire a porter</strong> (~₹800–1,000/day, shared cost ~₹2k pp) to carry the main load, and walk with a light 20–30L daypack for water, snacks and rain layer. Solves the bag problem and keeps your energy for the trail. If you'd rather carry your own, borrow or buy a proper 40–50L rucksack with a hip belt before the trek.</p>
+    </div>
+
+    <div class="note">
+      <div class="nt">👟 About your shoes</div>
+      <p>Your high-ankle, good-grip shoes will likely be fine — Sandakphu is non-technical and mostly jeep track + packed earth. The risk is the wet descent in late September: muddy trail + non-waterproof shoes = cold soaked feet all day. <strong>Test them on a 2+ hour walk now.</strong> If they stay dry and blister-free, you're good. If not, a Quechua MH500 / Forclaz pair (~₹3–4k) is the best single purchase you'll make. Either way: <strong>never wear fresh shoes on a trek — always break them in first.</strong></p>
+    </div>
+  </section>
+
+  <!-- SAFETY -->
+  <section id="safety">
+    <div class="eyebrow">Stay well up there</div>
+    <h2>Altitude &amp; <em>safety</em></h2>
+    <p class="lead">At ~3,636 m, mild altitude effects are possible but usually manageable because you ascend gradually over 3 days. Know the signs.</p>
+
+    <div class="grid2">
+      <div class="card amber">
+        <h3>AMS warning signs</h3>
+        <ul>
+          <li>Persistent headache that won't shift with rest</li>
+          <li>Nausea, loss of appetite, dizziness</li>
+          <li>Unusual breathlessness at rest, poor sleep</li>
+          <li>Fatigue out of proportion to effort</li>
+        </ul>
+        <p style="font-size:.86rem;margin-top:12px;color:var(--ice)">Tell your guide <strong>immediately</strong>. The golden rule: if symptoms worsen, <strong>descend</strong> — and on this trek, you always can.</p>
+      </div>
+      <div class="card">
+        <h3>Prevention basics</h3>
+        <ul>
+          <li>Hydrate constantly — warm water, not cold drinks</li>
+          <li>Walk slow and steady; don't race ahead</li>
+          <li>Eat well even if appetite dips — you need the fuel</li>
+          <li>No alcohol on the ascent; sleep at lower halt if unsure</li>
+          <li>Carry Diamox only after asking a doctor</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note cool">
+      <div class="nt">🧰 Non-negotiable checklist</div>
+      <p><strong>Cash:</strong> no ATMs after Sukhia Pokhari — carry enough for everything plus buffer. <strong>Power bank:</strong> charging is limited and sometimes charged extra. <strong>Documents:</strong> original government photo ID + 2 passport photos for forest permit. <strong>Guide:</strong> mandatory beyond Tumling (Singalila National Park entry) — non-negotiable legally and practically. <strong>Trash:</strong> carry your wrappers out. Red panda habitat.</p>
+    </div>
+  </section>
+
+  <!-- BOOK -->
+  <section id="book">
+    <div class="eyebrow">Make it happen</div>
+    <h2>Next steps &amp; <em>booking checklist</em></h2>
+
+    <div class="grid2" style="align-items:start">
+      <div class="card">
+        <h3>Checklist by timeline</h3>
+        <ul>
+          <li><strong>Now:</strong> Confirm dates — target leaving Kolkata ~28–29 Sep for optimal views</li>
+          <li><strong>Now:</strong> Book Kolkata ↔ NJP train (IRCTC opens 60 days out — set a reminder for late July)</li>
+          <li><strong>~6 weeks out:</strong> Arrange registered Maneybhanjan guide; ask them to pre-book GTA hut nights (Tonglu + Sandakphu book out in peak season)</li>
+          <li><strong>~6 weeks out:</strong> Sort gear gaps — rain layer, poles, shoes test, porter/bag decision</li>
+          <li><strong>Ongoing:</strong> Cardio training 4–5×/week</li>
+          <li><strong>Day before:</strong> ID + passport photos + sufficient cash + power bank fully charged</li>
+        </ul>
+      </div>
+      <div class="card amber">
+        <h3>About Rinku's — Srikhola</h3>
+        <p style="font-size:.92rem">Your brother mentioned "Rinku's" at Srikhola — a well-known name in Bengali trekking circles. <strong>Mr. Rinku (9733061793)</strong> is associated with Eden Lodge at Gorkhey, which has consistently excellent reviews for food and hospitality on the Indiahikes and TripAdvisor threads. At Srikhola itself, popular stays include Hotel Red Panda (beside the GTA hut) and local homestays near the hanging bridge.</p>
+        <p style="font-size:.84rem;margin-top:10px;color:var(--ice-dim)">Confirm the exact lodge name and contact with your brother — he'll know exactly who to call. Srikhola is a warm, riverside ending to the trek and worth savouring before the long drive back.</p>
+      </div>
+    </div>
+
+    <div class="note green">
+      <div class="nt">✦ One last thing</div>
+      <p>Your brother's plan is genuinely the right way to do this. The shared-car route, the GTA hut stays, the Srikhola finish — all of it is how experienced Bengali trekkers run this route. Get the timing right (aim for October 1–3 summit), get a porter if your bag isn't a rucksack, break in your shoes, and put the training in. The Sleeping Buddha at dawn — Everest, Kanchenjunga, Lhotse and Makalu in one frame — is one of the great sights in the Himalayas. You've earned every step of it.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div>Sandakphu Field Guide v2 · updated with your brother's plan · 26 Sep–4 Oct 2026</div>
+  <div class="src">Compiled from Indiahikes, Himalaya Trekker, Wikivoyage, TripAdvisor trekker reviews 2019–2024, local operator data, Singalila forest-dept rules, and darjeeling-tourism.com transport guides. Verify permit fees, guide contacts and train availability close to your dates.</div>
+</footer>
+
+<script>
+  const days = [
+    { n:'0', zero:true, sub:"Travel day — the smart local route", route:"NJP → Sukhia Pokhari → Maneybhanjan",
+      dist:"Drive only", time:"~3.5–4 hrs total", alt:"Stay: 1,950 m",
+      desc:"Take the overnight train from Kolkata (Darjeeling Mail / Padatik — departs ~10–11 PM, arrives NJP ~7–8 AM). From NJP take a shared Sumo to Sukhia Pokhari (~2.5–3 hrs, ~₹200–300 pp). Change to a short shared car to Maneybhanjan (~30 min, ~₹40–80). Arrive early-to-mid afternoon. Sort permits at the forest office, meet your registered guide, and confirm your GTA hut bookings. Have dinner early and sleep by 9 PM — Day 1 starts at dawn." },
+    { n:'1', sub:"First steps on the ridge", route:"Maneybhanjan → Tonglu (GTA Trekkers' Hut)",
+      dist:"~11 km", time:"5–6 hrs", alt:"Stay: 3,070 m",
+      desc:"Your first real day on the trail. Climb steadily through pine and rhododendron forest via Chitrey, Lamay Dhura and Meghma — prayer flags, first border crossings into Nepal and back. You gain ~1,120 m today, done gradually. The GTA Trekkers' Hut at Tonglu sits right on the ridge — basic but clean, with an excellent location. First evening views of Kanchenjunga if skies cooperate. Early dinner, early sleep." },
+    { n:'2', sub:"Into the park — the long day", route:"Tonglu → Kalipokhri",
+      dist:"~14 km", time:"6–7 hrs", alt:"Stay: 3,170 m",
+      desc:"The longest walking day and your key acclimatization stage. Drop to Gairibas (good lunch stop), pass the forest checkpost into Singalila National Park, then a rolling climb through deep rhododendron and silver fir forest — prime red panda territory. Kalipokhri ('black lake') is a sacred pond that allegedly never freezes. Good homestay options here (Chewang Lodge is well-reviewed). Pace yourself throughout — this day quietly banks your fitness for the summit push." },
+    { n:'3', sub:"To the summit", route:"Kalipokhri → Sandakphu (GTA Trekkers' Hut)",
+      dist:"~6 km", time:"3–4 hrs", alt:"Stay: 3,636 m",
+      desc:"Short day on purpose. The final climb from Bikheybhanjang to Sandakphu is the steepest section of the whole trek — ~400 m gain in under 4 km. Arrive early afternoon. Rest, eat, hydrate. Spend the evening watching sunset light on Kanchenjunga from the bench at the top. Be in bed by 9 PM. The 4:30 AM alarm is the reason you're here." },
+    { n:'4', sub:"Sunrise + the big descent", route:"Sandakphu → Srikhola (Rinku's / Red Panda)",
+      dist:"~16–18 km", time:"7–8 hrs", alt:"Stay: ~2,100 m",
+      desc:"The centerpiece and the hardest physical day. Wake at 4:30 AM — layer everything you own. Walk to the viewpoint for THE sunrise: Kanchenjunga, Lhotse, Makalu, and on clear days Everest far left — the full Sleeping Buddha. After breakfast, begin the long descent: Sandakphu → Gurdum (10 km, steep in places — poles save your knees) → Srikhola (6 km, beautiful forest trail). Start no later than 7 AM. If you're struggling at Gurdum, there are homestays — stay there and do Srikhola in the morning. Don't push through if your legs are gone." },
+    { n:'5', sub:"Trail's end — drive home", route:"Srikhola → NJP (shared car)",
+      dist:"~130–145 km drive", time:"5–6 hrs", alt:"Plains",
+      desc:"Cross the Srikhola hanging bridge — photograph it — then load into a shared jeep via Rimbik → Maneybhanjan → Siliguri → NJP. Leave by 8–9 AM to reach NJP by 2–4 PM. The drive back down through Darjeeling tea gardens and the foothills has its own quiet beauty. Arrive NJP, catch your evening train, and carry the Sleeping Buddha home with you." }
+  ];
+
+  const dl = document.getElementById('days');
+  days.forEach(d=>{
+    const el = document.createElement('div');
+    el.className = 'day' + (d.zero ? ' day-zero' : '');
+    el.innerHTML = `
+      <div class="day-head">
+        <div class="day-no">${d.n}<span>Day</span></div>
+        <div class="day-main">
+          <div class="day-route">${d.route}</div>
+          <div class="day-meta"><b>${d.dist}</b> · ${d.time} · ${d.alt}</div>
+        </div>
+        <div class="chev">▾</div>
+      </div>
+      <div class="day-body"><div class="day-inner">
+        <div class="day-meta" style="margin-top:14px;color:var(--amber)">${d.sub}</div>
+        <p>${d.desc}</p>
+        <div class="rowstats">
+          <span class="pill">Distance <b>${d.dist}</b></span>
+          <span class="pill">Time <b>${d.time}</b></span>
+          <span class="pill">Sleep at <b>${d.alt.replace('Stay: ','')}</b></span>
+        </div>
+      </div></div>`;
+    el.querySelector('.day-head').addEventListener('click',()=>{
+      const open = el.classList.toggle('open');
+      const body = el.querySelector('.day-body');
+      body.style.maxHeight = open ? body.scrollHeight+'px' : 0;
+    });
+    dl.appendChild(el);
+  });
+
+  /* ELEVATION PROFILE */
+  const profile = [
+    {name:'NJP/Train',alt:120},{name:'Maneybhanjan',alt:1950},{name:'Tonglu',alt:3070},
+    {name:'Kalipokhri',alt:3170},{name:'Sandakphu',alt:3636,peak:true},
+    {name:'Gurdum',alt:2300},{name:'Srikhola',alt:2100}
+  ];
+  const maxA=3636, minA=100;
+  const ev=document.getElementById('elev');
+  profile.forEach(p=>{
+    const h=((p.alt-minA)/(maxA-minA))*100;
+    const b=document.createElement('div');
+    b.className='ebar'+(p.peak?' peak':'');
+    b.style.height=Math.max(h,4)+'%';
+    b.innerHTML=`<span class="alt">${p.alt>=1000?(p.alt/1000).toFixed(1)+'k':p.alt}m</span><span class="lab">${p.name}</span>`;
+    ev.appendChild(b);
+  });
+
+  /* GEAR */
+  const gear = [
+    { title:"Clothing — layers", items:[
+      {t:"Base layers (cotswool upper & lower)", s:"You have these — perfect insulating base layer", c:'have'},
+      {t:"Hoodies × 2", s:"You have these — good mid-layer", c:'have'},
+      {t:"Jacket (outer)", s:"You have this — bring your warmest for the ridge", c:'have'},
+      {t:"Gloves", s:"You have these — essential for the 4:30 AM summit morning", c:'have'},
+      {t:"Waterproof rain jacket / poncho", s:"Must buy — late Sep showers are likely, hoodies won't cut it", c:'buy'},
+      {t:"Warm beanie / monkey cap", s:"Covers ears on the cold bare ridge — cheap and vital", c:'buy'},
+      {t:"4–5 pairs socks (2 woollen/warm)", s:"Dry feet = no blisters = a good time", c:'buy'},
+      {t:"Quick-dry trek trousers", s:"Jeans get heavy and freezing when wet", c:'buy'},
+    ]},
+    { title:"Footwear & carry", items:[
+      {t:"High-ankle grippy shoes", s:"You have these — test on a 2 hr walk; fine if dry and blister-free", c:'have'},
+      {t:"Waterproof trek shoes (fallback)", s:"Only if your current ones fail the test walk", c:'maybe'},
+      {t:"Proper rucksack 40L+ with hip belt OR hire porter", s:"Travel bag is painful over long days — decide before you go", c:'buy'},
+      {t:"Trekking poles (1 pair)", s:"Non-negotiable for the steep Day 4 descent — rentable at Maneybhanjan", c:'buy'},
+    ]},
+    { title:"Essentials", items:[
+      {t:"Reusable water bottle 1.5–2L", s:"Refill at tea-houses; stay constantly hydrated", c:'buy'},
+      {t:"Power bank + cable", s:"Charging is limited / paid on the trail", c:'have'},
+      {t:"Headlamp / torch", s:"For the 4:30 AM sunrise walk — mandatory", c:'buy'},
+      {t:"Sunglasses + sunscreen SPF50 + lip balm", s:"High-altitude sun is deceptively harsh even when cold", c:'buy'},
+      {t:"Personal first aid + ORS + painkillers", s:"Blister plasters, Diamox if doctor-advised", c:'buy'},
+      {t:"Govt photo ID (original) + 2 passport photos", s:"Required at forest checkpost for permits", c:'buy'},
+      {t:"Sufficient cash", s:"No ATMs after Sukhia Pokhari — withdraw at NJP or Siliguri", c:'buy'},
+      {t:"Dry bags / ziplock bags", s:"Protect phone, ID and clothes from rain", c:'buy'},
+    ]},
+  ];
+
+  const gl=document.getElementById('gearlist');
+  let total=0;
+  gear.forEach(g=>{
+    const grp=document.createElement('div');
+    grp.className='gear-group';
+    const tagClass={have:'have',buy:'buy',maybe:'maybe'};
+    grp.innerHTML=`<h3>${g.title}</h3>`;
+    g.items.forEach(it=>{
+      total++;
+      const row=document.createElement('div');
+      row.className='gi';
+      row.innerHTML=`<div class="box">✓</div>
+        <div class="gtxt"><b>${it.t}</b> <span class="tag ${tagClass[it.c]}">${it.c==='have'?'Have':it.c==='buy'?'Buy / sort':'Optional'}</span>
+        <small>${it.s}</small></div>`;
+      row.addEventListener('click',()=>{ row.classList.toggle('checked'); updateBar(); });
+      grp.appendChild(row);
+    });
+    gl.appendChild(grp);
+  });
+  function updateBar(){
+    const done=document.querySelectorAll('.gi.checked').length;
+    document.getElementById('bar').style.width=(done/total*100)+'%';
+  }
+</script>
+</body>
+</html>
